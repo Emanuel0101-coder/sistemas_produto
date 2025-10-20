@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Visualizar Produto</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>Detalhes do Produto</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
 <body>
-<h1 th:text="${produto.nome}"></h1>
-<p><strong>Descrição:</strong> <span th:text="${produto.descricao}"></span></p>
-<p><strong>Preço:</strong> R$ <span th:text="${produto.preco}"></span></p>
-<p><strong>Estoque:</strong> <span th:text="${produto.estoque}"></span></p>
+  <header>Detalhes do Produto</header>
 
-<a href="/produtos">Voltar</a>
+  <div class="container">
+    <h2 th:text="${produto.nome}"></h2>
+
+    <p><strong>Preço:</strong> R$ <span th:text="${#numbers.formatDecimal(produto.preco, 1, 2)}"></span></p>
+    <p><strong>Descrição:</strong> <span th:text="${produto.descricao}"></span></p>
+    <p><strong>Estoque disponível:</strong> <span th:text="${produto.estoque}"></span> unidades</p>
+
+    <div class="actions">
+      <a th:href="@{|/produtos/editar/${produto.id}|}" class="btn">Editar</a>
+      <a th:href="@{/produtos}" class="btn">⬅ Voltar</a>
+    </div>
+  </div>
+
+  <footer>© 2025 Komprinha - Compre aqui já!</footer>
 </body>
 </html>

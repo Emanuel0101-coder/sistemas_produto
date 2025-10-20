@@ -1,7 +1,8 @@
 package com.mercado.komprinha.controller;
 
 import com.mercado.komprinha.model.Produto;
-import com.mercado.komprinha.service.ProdutoService;
+import com.mercado.komprinha.repository.ProdutoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,56 +11,57 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/produtos")
 public class ProdutoController {
 
-    private final ProdutoService service;
+    @Autowired
+    private ProdutoRepository produtoRepository;
 
-    public ProdutoController(ProdutoService service) {
-        this.service = service;
-    }
-
+    // Página inicial com lista de produtos
     @GetMapping
     public String listar(Model model) {
-        model.addAttribute("produtos", service.listarTodos());
+        model.addAttribute("produtos", produtoRepository.findAll());
         return "listar";
     }
 
+    // Página de cadastro
     @GetMapping("/novo")
-    public String novoProduto(Model model) {
+    public String novo(Model model) {
         model.addAttribute("produto", new Produto());
         return "cadastrar";
     }
 
-    @PostMapping
+    // Salvar novo produto
+    @PostMapping("/salvar")
     public String salvar(@ModelAttribute Produto produto) {
-        service.salvar(produto);
+        produtoRepository.save(produto);
         return "redirect:/produtos";
     }
 
+    // Página de edição
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
-        Produto produto = service.buscarPorId(id)
-                .orElseThrow(() -> new IllegalArgumentException("Produto inválido: " + id));
+        Produto produto = produtoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
         model.addAttribute("produto", produto);
         return "editar";
     }
 
-    @PostMapping("/editar/{id}")
-    public String atualizar(@PathVariable Long id, @ModelAttribute Produto produto) {
-        produto.setId(id);
-        service.salvar(produto);
+    // Atualizar produto
+    @PostMapping("/atualizar")
+    public String atualizar(@ModelAttribute Produto produto) {
+        produtoRepository.save(produto);
         return "redirect:/produtos";
     }
 
+    // Página de visualização
     @GetMapping("/visualizar/{id}")
     public String visualizar(@PathVariable Long id, Model model) {
-        Produto produto = service.buscarPorId(id)
-                .orElseThrow(() -> new IllegalArgumentException("Produto inválido: " + id));
+        Produto produto = produtoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
         model.addAttribute("produto", produto);
         return "visualizar";
     }
 
-    @GetMapping("/excluir/{id}")
-    public String excluir(@PathVariable Long id) {
-        service.excluir(id);
+    // Excluir produto
+    @GetMapping("/deletar/{id}")
+    public String deletar(@PathVariable Long id) {
+        produtoRepository.deleteById(id);
         return "redirect:/produtos";
     }
 }
