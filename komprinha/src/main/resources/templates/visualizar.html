@@ -2,25 +2,172 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detalhes do Produto</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f7ff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      width: 100%;
+      height: 160px;
+      background: linear-gradient(180deg, #1e40ff, #3366ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      width: 180px;
+      border-radius: 25px;
+    }
+
+    .card {
+      background: white;
+      width: 90%;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: #0a1e8c;
+      margin-bottom: 20px;
+    }
+
+    .produto-img {
+      width: 230px;
+      border-radius: 18px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      margin: 15px auto 25px;
+      display: block;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #333;
+      margin: 6px 0;
+    }
+
+    p span {
+      font-weight: 600;
+      color: #111;
+    }
+
+    .botoes {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 22px;
+      border-radius: 10px;
+      border: none;
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+      display: inline-block;
+    }
+
+    .btn-editar {
+      background-color: #0048ff;
+    }
+
+    .btn-editar:hover {
+      background-color: #0038cc;
+      transform: scale(1.05);
+    }
+
+    .btn-voltar {
+      background-color: #6b6bff;
+    }
+
+    .btn-voltar:hover {
+      background-color: #5555ee;
+      transform: scale(1.05);
+    }
+
+    .btn-excluir {
+      background-color: #e53935;
+    }
+
+    .btn-excluir:hover {
+      background-color: #c62828;
+      transform: scale(1.05);
+    }
+
+    footer {
+      background: #1e40ff;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      margin-top: 50px;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .produto-img {
+        width: 180px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      .btn {
+        padding: 9px 18px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <header>Detalhes do Produto</header>
+  <header>
+    <img src="/images/logo.png" alt="Komprinha" class="logo">
+  </header>
 
-  <div class="container">
-    <h2 th:text="${produto.nome}"></h2>
+  <div class="card">
+    <h1 th:text="${produto.nome}">Nome do Produto</h1>
 
-    <p><strong>Preço:</strong> R$ <span th:text="${#numbers.formatDecimal(produto.preco, 1, 2)}"></span></p>
-    <p><strong>Descrição:</strong> <span th:text="${produto.descricao}"></span></p>
-    <p><strong>Estoque disponível:</strong> <span th:text="${produto.estoque}"></span> unidades</p>
+    <img th:if="${produto.imagem}" 
+         th:src="${#strings.startsWith(produto.imagem, '/images/') ? produto.imagem : 'data:image/jpeg;base64,' + produto.imagem}" 
+         alt="Imagem do produto" 
+         class="produto-img">
 
-    <div class="actions">
-      <a th:href="@{|/produtos/editar/${produto.id}|}" class="btn">Editar</a>
-      <a th:href="@{/produtos}" class="btn">⬅ Voltar</a>
+    <p><span>Preço:</span> R$ <span th:text="${#numbers.formatDecimal(produto.preco, 1, 2)}"></span></p>
+    <p><span>Descrição:</span> <span th:text="${produto.descricao}"></span></p>
+    <p><span>Estoque disponível:</span> <span th:text="${produto.estoque}"></span> unidades</p>
+    <p><span>Categoria:</span> <span th:text="${produto.categoria}"></span></p>
+
+    <div class="botoes">
+      <a th:href="@{|/produtos/editar/${produto.id}|}" class="btn btn-editar">Editar</a>
+      <a th:href="@{/produtos}" class="btn btn-voltar">Voltar</a>
+      <a th:href="@{|/produtos/deletar/${produto.id}|}" class="btn btn-excluir"
+         onclick="return confirm('Tem certeza que deseja excluir este produto?');">Excluir</a>
     </div>
   </div>
 
-  <footer>© 2025 Komprinha - Compre aqui já!</footer>
+  <footer>
+    © 2025 Komprinha - Compre aqui já!
+  </footer>
 </body>
 </html>

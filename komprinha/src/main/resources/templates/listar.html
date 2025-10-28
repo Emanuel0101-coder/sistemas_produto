@@ -2,41 +2,221 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Sistema de Produtos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Komprinha</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
+  <style>
+    /* ==== CABEÇALHO AZUL COM LOGO ==== */
+    header {
+      width: 100%;
+      height: 200px; /* aumentei um pouco a altura do header */
+      background: linear-gradient(180deg, #4D6BFF 0%, #3860FF 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      margin-bottom: 40px;
+    }
+
+    .logo-principal {
+      width: 280px; /* AUMENTADO de 220px → 280px */
+      height: auto;
+      border-radius: 25px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-principal:hover {
+      transform: scale(1.05);
+    }
+
+    /* ==== CONTAINER ==== */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto 50px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .titulo-pagina {
+      text-align: center;
+      color: #1e40ff;
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+    }
+
+    /* ==== BOTÃO NOVO PRODUTO ==== */
+    .novo-produto {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      background-color: #1e40ff;
+      color: white;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 25px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background-color: #0035d1;
+      transform: scale(1.05);
+    }
+
+    /* ==== SEÇÃO DE CATEGORIA ==== */
+    .titulo-categoria {
+      font-size: 1.4rem;
+      margin: 30px 0 15px;
+      color: #333;
+      border-left: 6px solid #1e40ff;
+      padding-left: 10px;
+    }
+
+    /* ==== GRADE DE PRODUTOS ==== */
+    .grid-produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 25px;
+    }
+
+    /* ==== CARD DO PRODUTO ==== */
+    .produto-card {
+      background: #fff;
+      border: 2px solid #e2e8f0;
+      border-radius: 18px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 220px;
+    }
+
+    .produto-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border-color: #1e40ff;
+    }
+
+    .produto-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    .sem-img {
+      color: #999;
+      font-style: italic;
+    }
+
+    /* ==== RODAPÉ ==== */
+    footer {
+      background: #1e40ff;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
+
+    /* ==== RESPONSIVIDADE ==== */
+    @media (max-width: 768px) {
+      header {
+        height: 150px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+      }
+
+      .logo-principal {
+        width: 200px; /* ajustado proporcionalmente */
+      }
+
+      .container {
+        width: 94%;
+        padding: 15px;
+      }
+
+      .grid-produtos {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 15px;
+      }
+
+      .produto-card {
+        height: 180px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo-principal {
+        width: 170px;
+      }
+
+      .grid-produtos {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .produto-card {
+        height: 160px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <header>Komprinha</header>
 
+  <!-- CABEÇALHO COM LOGO -->
+  <header>
+    <img src="/images/logo.png" alt="Logo Komprinha" class="logo-principal">
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
   <div class="container">
-    <h2>Produtos Cadastrados</h2>
+    
+    <h2 class="titulo-pagina">Produtos Cadastrados</h2>
 
-    <a class="btn" th:href="@{/produtos/novo}">➕ Novo Produto</a>
+    <div class="novo-produto">
+      <a class="btn" th:href="@{/produtos/novo}">Novo Produto</a>
+    </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Preço</th>
-          <th>Descrição</th>
-          <th>Estoque</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="produto : ${produtos}">
-          <td th:text="${produto.nome}"></td>
-          <td>R$ <span th:text="${#numbers.formatDecimal(produto.preco, 1, 2)}"></span></td>
-          <td th:text="${produto.descricao}"></td>
-          <td th:text="${produto.estoque}"></td>
-          <td>
-            <a class="btn btn-visualizar" th:href="@{|/produtos/visualizar/${produto.id}|}">visualizar</a>
-            <a class="btn btn-editar" th:href="@{|/produtos/editar/${produto.id}|}">Editar</a>
-            <a class="btn btn-excluir" th:href="@{|/produtos/deletar/${produto.id}|}">Excluir</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- PRODUTOS AGRUPADOS POR CATEGORIA -->
+    <section th:each="cat : ${T(com.mercado.komprinha.model.Categoria).values()}">
+      <h3 class="titulo-categoria" th:text="${cat}"></h3>
+
+      <div class="grid-produtos">
+        <a class="produto-card"
+           th:each="produto : ${produtos}"
+           th:if="${produto.categoria == cat}"
+           th:href="@{|/produtos/visualizar/${produto.id}|}">
+           
+          <img th:if="${produto.imagem}"
+               th:src="${#strings.startsWith(produto.imagem, '/images/') ? produto.imagem : 'data:image/jpeg;base64,' + produto.imagem}"
+               alt="Imagem do produto"
+               class="produto-img">
+          <span th:if="${produto.imagem == null}" class="sem-img">Sem imagem</span>
+        </a>
+      </div>
+    </section>
   </div>
+
+  <footer>
+    © 2025 Komprinha - Muito mais que um mercado.
+  </footer>
 </body>
 </html>

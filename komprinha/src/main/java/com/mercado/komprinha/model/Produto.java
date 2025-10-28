@@ -8,20 +8,22 @@ public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String nome;
     private String descricao;
     private Double preco;
     private Integer estoque;
 
-    public Produto() {}
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private Categoria categoria;
 
-    public Produto(String nome, String descricao, Double preco, Integer estoque) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.preco = preco;
-        this.estoque = estoque;
-    }
+
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String imagem;
+
+    public Produto() {}
 
     // Getters e Setters
     public Long getId() { return id; }
@@ -38,4 +40,10 @@ public class Produto {
 
     public Integer getEstoque() { return estoque; }
     public void setEstoque(Integer estoque) { this.estoque = estoque; }
+
+    public Categoria getCategoria() { return categoria; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
+
+    public String getImagem() { return imagem; }
+    public void setImagem(String imagem) { this.imagem = imagem; }
 }

@@ -2,30 +2,161 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Cadastrar Produto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novo Produto</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f7f9ff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      height: 160px;
+      background: linear-gradient(180deg, #1e40ff, #3366ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      width: 180px;
+      border-radius: 25px;
+    }
+
+    .card {
+      background: #ffffff;
+      width: 90%;
+      max-width: 420px;
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      color: #111;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #333;
+      display: block;
+      margin-bottom: 5px;
+      margin-top: 12px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: #f0f4ff;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #7a93ff;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      background: #e8efff;
+      box-shadow: 0 0 5px rgba(30, 64, 255, 0.3);
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      background-color: #0048ff;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0036d9;
+      transform: scale(1.02);
+    }
+
+    a.voltar {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      text-decoration: none;
+      color: #0048ff;
+      font-weight: 600;
+    }
+
+    a.voltar:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
+
 <body>
-  <header>Área de cadastro</header>
+  <header>
+    <img src="/images/logo.png" alt="Komprinha" class="logo">
+  </header>
 
-  <div class="container">
-    <h2>Cadastrar Novo Produto</h2>
-    <form th:action="@{/produtos/salvar}" th:object="${produto}" method="post">
-      <label>Nome:</label>
-      <input type="text" th:field="*{nome}" placeholder="Nome do produto" required>
-      <label>Preço:</label>
-      <input type="number" th:field="*{preco}" step="0.01" placeholder="0.00" required>
-      <label>Descrição:</label>
-      <textarea th:field="*{descricao}" rows="3" placeholder="Ex: Produto orgânico, sem glúten..."></textarea>
-      <label>Estoque:</label>
-      <input type="number" th:field="*{estoque}" min="0" placeholder="Quantidade em estoque" required>
-      <div class="actions">
-        <button type="submit">Salvar</button>
-        <a href="/produtos" class="btn-voltar">⬅ Voltar</a>
+  <div class="card">
+    <h1>Novo Produto</h1>
+
+    <form th:action="@{/produtos/salvar}" th:object="${produto}" method="post" enctype="multipart/form-data">
+
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" th:field="*{nome}" placeholder="Ex: Bola" required>
+
+      <label for="descricao">Descrição</label>
+      <input type="text" id="descricao" th:field="*{descricao}" placeholder="Ex: ótima para esportes">
+
+      <label for="estoque">Estoque</label>
+      <input type="number" id="estoque" th:field="*{estoque}" placeholder="Ex: 10" required>
+
+      <label for="preco">Valor</label>
+      <input type="number" step="0.01" id="preco" th:field="*{preco}" placeholder="Ex: 00.00" required>
+
+      <div class="row">
+        <div style="flex: 1;">
+          <label for="file">Imagem</label>
+          <input type="file" id="file" name="file" accept="image/*">
+        </div>
+
+        <div style="flex: 1;">
+          <label for="categoria">Categoria</label>
+          <select id="categoria" th:field="*{categoria}">
+            <option value="">Selecione</option>
+            <option th:each="cat : ${categorias}" th:value="${cat.name()}" th:text="${cat.toString()}"></option>
+          </select>
+        </div>
       </div>
-    </form>
-  </div>
 
-  <footer>© 2025 Komprinha - Compre aqui já!</footer>
+      <button type="submit">Salvar</button>
+    </form>
+
+    <a th:href="@{/produtos}" class="voltar">⬅ Voltar</a>
+  </div>
 </body>
 </html>
