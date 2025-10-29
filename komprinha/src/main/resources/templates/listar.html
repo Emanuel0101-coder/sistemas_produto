@@ -186,7 +186,6 @@
     <img src="/images/logo.png" alt="Logo Komprinha" class="logo-principal">
   </header>
 
-  <!-- CONTEÚDO PRINCIPAL -->
   <div class="container">
     
     <h2 class="titulo-pagina">Produtos Cadastrados</h2>
@@ -195,7 +194,6 @@
       <a class="btn" th:href="@{/produtos/novo}">Novo Produto</a>
     </div>
 
-    <!-- PRODUTOS AGRUPADOS POR CATEGORIA -->
     <section th:each="cat : ${T(com.mercado.komprinha.model.Categoria).values()}">
       <h3 class="titulo-categoria" th:text="${cat}"></h3>
 

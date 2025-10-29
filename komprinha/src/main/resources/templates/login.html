@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,49 +9,59 @@
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      background: #fff;
+      background: linear-gradient(180deg, #ffffff 0%, #e8edff 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
+      overflow: hidden;
+      border: 6px solid #1E40FF; /* 🔹 borda azul em volta de toda a tela */
+      box-sizing: border-box;
+      border-radius: 20px; /* 🔹 leve arredondamento */
     }
 
     .logo {
-      width: 120px;
-      height: 120px;
+      width: 140px;
+      height: 140px;
       background: white;
       border-radius: 50%;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       overflow: hidden;
+      border: 4px solid #1E40FF;
     }
 
+    /* 🔹 agora a logo preenche 100% do círculo */
     .logo img {
-      width: 90%;
-      height: auto;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     h1 {
       font-size: 2rem;
-      color: #222;
+      color: #1E40FF;
       margin: 10px 0 0;
       font-weight: 700;
+      letter-spacing: 1px;
     }
 
     p {
       color: #666;
       margin: 4px 0 25px;
       font-size: 1rem;
+      font-weight: 500;
     }
 
     h2 {
       color: #111;
       font-size: 1.2rem;
       margin-bottom: 25px;
+      font-weight: 600;
     }
 
     .btn {
@@ -65,19 +75,36 @@
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .btn:hover {
       background: #0035d1;
-      transform: scale(1.05);
+      transform: scale(1.07);
     }
 
     footer {
       position: absolute;
-      bottom: 10px;
+      bottom: 15px;
       color: #999;
       font-size: 0.85rem;
+      text-align: center;
+      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      .btn {
+        padding: 12px 50px;
+      }
+
+      .logo {
+        width: 110px;
+        height: 110px;
+      }
+
+      h1 {
+        font-size: 1.7rem;
+      }
     }
   </style>
 </head>
@@ -87,13 +114,12 @@
   </div>
 
   <h1>Komprinha</h1>
-  <p>Carrinho cheio</p>
+  <p>“Muito mais que um mercado”</p>
 
-  <h2>Olá</h2>
+  <h2>Olá!</h2>
 
-  <a href="/produtos" class="btn">Entrar</a>
+  <a th:href="@{/produtos}" class="btn">Entrar</a>
 
   <footer>© 2025 Komprinha - Muito mais que um mercado.</footer>
 </body>
 </html>
-  

@@ -27,22 +27,22 @@ public class DataLoader {
 
                 // 🔹 Produto 2
                 Produto p2 = new Produto();
-                p2.setNome("Corte de chamas prateadas");
-                p2.setDescricao("Capa dura, pintura tri-lateral, edição de colecionador");
-                p2.setPreco(22.50);
+                p2.setNome("Arroz");
+                p2.setDescricao("Ótimo para cozinhar com diversas coisas");
+                p2.setPreco(30.00);
                 p2.setEstoque(15);
-                p2.setImagem("/images/chamas_prateadas.png");
-                p2.setCategoria(Categoria.LITERATURA);
+                p2.setImagem("/images/Arroz.png");
+                p2.setCategoria(Categoria.COMIDA);
                 produtoRepository.save(p2);
 
                 // 🔹 Produto 3
                 Produto p3 = new Produto();
-                p3.setNome("Corte espinhos e rosas");
-                p3.setDescricao("Capa dura, pintura tri-lateral, continuação do primeiro");
-                p3.setPreco(35.00);
+                p3.setNome("Bola de Futebol");
+                p3.setDescricao("Material resistente, perfeita para jogos de campo");
+                p3.setPreco(95.00);
                 p3.setEstoque(18);
-                p3.setImagem("/images/corte_espinhos_rosas.png");
-                p3.setCategoria(Categoria.LITERATURA);
+                p3.setImagem("/images/bola.png");
+                p3.setCategoria(Categoria.ESPORTIVO);
                 produtoRepository.save(p3);
 
                 // 🔹 Produto 4
@@ -52,7 +52,7 @@ public class DataLoader {
                 p4.setPreco(29.99);
                 p4.setEstoque(25);
                 p4.setImagem("/images/fnaf.png");
-                p4.setCategoria(Categoria.ARTE);
+                p4.setCategoria(Categoria.LITERATURA);
                 produtoRepository.save(p4);
 
                 // 🔹 Produto 5
@@ -87,32 +87,32 @@ public class DataLoader {
 
                 // 🔹 Produto 8
                 Produto p8 = new Produto();
-                p8.setNome("Corte névoa e fúria");
-                p8.setDescricao("Edição de colecionador volume 2");
-                p8.setPreco(27.75);
+                p8.setNome("Noite Estrelhada");
+                p8.setDescricao("Criador: Van Gogh e sua noite");
+                p8.setPreco(1000000.00);
                 p8.setEstoque(16);
-                p8.setImagem("/images/nevoa_furia.png");
-                p8.setCategoria(Categoria.LITERATURA);
+                p8.setImagem("/images/noite.png");
+                p8.setCategoria(Categoria.ARTE);
                 produtoRepository.save(p8);
 
                 // 🔹 Produto 9
                 Produto p9 = new Produto();
-                p9.setNome("Princípe Cruel");
-                p9.setDescricao("O príncipe que nasceu do rei perverso");
-                p9.setPreco(19.99);
+                p9.setNome("A Mesa");
+                p9.setDescricao("Mesa onde o rei da espanha se serviu");
+                p9.setPreco(5000000.00);
                 p9.setEstoque(30);
-                p9.setImagem("/images/principe.png");
-                p9.setCategoria(Categoria.LITERATURA);
+                p9.setImagem("/images/mesa.png");
+                p9.setCategoria(Categoria.IMOVEL);
                 produtoRepository.save(p9);
 
                 // 🔹 Produto 10
                 Produto p10 = new Produto();
-                p10.setNome("Rainha do nada");
-                p10.setDescricao("Aquela que desejava governar, mas nunca conseguiu");
-                p10.setPreco(60.00);
+                p10.setNome("Faca");
+                p10.setDescricao("Ótima para cozinhar e matar pessoas");
+                p10.setPreco(50.00);
                 p10.setEstoque(10);
-                p10.setImagem("/images/rainha.png");
-                p10.setCategoria(Categoria.LITERATURA);
+                p10.setImagem("/images/faca.png");
+                p10.setCategoria(Categoria.OBJETO);
                 produtoRepository.save(p10);
 
                 System.out.println("✅ Banco H2 populado automaticamente com 10 produtos iniciais!");

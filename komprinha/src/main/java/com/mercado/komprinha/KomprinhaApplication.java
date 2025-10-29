@@ -13,9 +13,9 @@ public class KomprinhaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        System.out.println("\n🚀 Sistema Komprinha iniciado com sucesso!");
-        System.out.println("👉 Acesse: http://localhost:8080/produtos");
-        System.out.println("👉 Console H2: http://localhost:8080/h2-console\n");
+        System.out.println("\n Sistema Komprinha iniciado com sucesso!");
+        System.out.println("Acesse: http://localhost:8080/login");
+        System.out.println("Console H2: http://localhost:8080/h2-console\n");
     }
 }
 

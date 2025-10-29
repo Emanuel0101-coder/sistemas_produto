@@ -19,14 +19,12 @@ public class ProdutoController {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    // Página inicial com lista de produtos
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("produtos", produtoRepository.findAll());
         return "listar";
     }
 
-    // Página de cadastro (com categorias)
     @GetMapping("/novo")
     public String novo(Model model) {
         model.addAttribute("produto", new Produto());
@@ -34,24 +32,21 @@ public class ProdutoController {
         return "cadastrar";
     }
 
-    // Salvar novo produto (imagem em base64)
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute Produto produto,
-                         @RequestParam("file") MultipartFile file) {
-        if (!file.isEmpty()) {
-            try {
+                         @RequestParam(value = "file", required = false) MultipartFile file) {
+        try {
+            if (file != null && !file.isEmpty()) {
                 String base64 = Base64.getEncoder().encodeToString(file.getBytes());
                 produto.setImagem(base64);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+            produtoRepository.save(produto);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        produtoRepository.save(produto);
         return "redirect:/produtos";
     }
 
-    // Página de edição (com categorias)
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         Produto produto = produtoRepository.findById(id)
@@ -61,24 +56,29 @@ public class ProdutoController {
         return "editar";
     }
 
-    // Atualizar produto (imagem em base64)
     @PostMapping("/atualizar")
     public String atualizar(@ModelAttribute Produto produto,
-                            @RequestParam("file") MultipartFile file) {
-        if (!file.isEmpty()) {
-            try {
+                            @RequestParam(value = "file", required = false) MultipartFile file) {
+        try {
+            if (file != null && !file.isEmpty()) {
+                // Usuário enviou nova imagem
                 String base64 = Base64.getEncoder().encodeToString(file.getBytes());
                 produto.setImagem(base64);
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                // Nenhum arquivo enviado → mantém imagem anterior
+                Produto existente = produtoRepository.findById(produto.getId())
+                        .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + produto.getId()));
+                produto.setImagem(existente.getImagem());
             }
-        }
 
-        produtoRepository.save(produto);
-        return "redirect:/produtos";
+            produtoRepository.save(produto);
+            return "redirect:/produtos";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/error";
+        }
     }
 
-    // Página de visualização
     @GetMapping("/visualizar/{id}")
     public String visualizar(@PathVariable Long id, Model model) {
         Produto produto = produtoRepository.findById(id)
@@ -87,7 +87,6 @@ public class ProdutoController {
         return "visualizar";
     }
 
-    // Excluir produto
     @GetMapping("/deletar/{id}")
     public String deletar(@PathVariable Long id) {
         produtoRepository.deleteById(id);
